@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Header from './UI/header.js';
+import URLRouter from './urlRouter';
 
 
 import {Route, Switch, Link, Router} from 'react-router-dom';
@@ -32,12 +33,19 @@ class App extends Component {
   }
   
   render () {
-    return (
+    /*return (
       <div>
         <Header buttonClicked = {this.headerButtonHandler}/>
         {this.headerButtonHandler}
       </div>
+    )*/
+
+    return (
+      <div>
+          <URLRouter/>
+      </div>
     )
+
   }
 
 }
