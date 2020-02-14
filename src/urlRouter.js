@@ -1,13 +1,15 @@
-import React from 'react';
-import {fade, makeStyles} from '@material-ui/core/styles';
+import React, {useState} from 'react';
 import {Route} from "react-router-dom";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+import {fade, makeStyles} from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
+
+import ImageHolder from './imageHolder';
 
 const useStyle = makeStyles (theme => ({
     paper: {
@@ -47,13 +49,27 @@ const useStyle = makeStyles (theme => ({
 
 const URLRouter = () => {
 
+    let searchItem = null;
+    const[imageSource, setImageSource] = useState("https://source.unsplash.com/800x450/?$giraffe");
+
     const onInputValue = (event) => {
+        searchItem = event.target.value;
+    }
+
+    const onSearchClick = () => {
         
+        if (searchItem !== null)
+        {
+            setImageSource("https://source.unsplash.com/800x450/?$" + searchItem);
+        }
+    }
+
+    const routeProps = (routeProps) => {
+        console.log("route reached");
+        console.log(routeProps.match.params.name);
     }
 
     let classes = useStyle();
-
-    let imageSource = "https://source.unsplash.com/800x450/?$giraffe";
 
     return (
         <div>
@@ -68,6 +84,10 @@ const URLRouter = () => {
                     <AppBar>
                         <ToolBar className = {classes.toolBar}>
                             <div className={classes.search}>
+                                <IconButton>
+                                    <SearchIcon onClick = {() => onSearchClick()}/>
+                                </IconButton>
+
                                 <InputBase
                                 placeholder="Search…"
                                 classes={{
@@ -75,14 +95,19 @@ const URLRouter = () => {
                                     input: classes.inputInput,
                                 }}
                                 inputProps={{ 'aria-label': 'search' }}
+                                onChange = {(event) => onInputValue(event)}
                                 />
                             </div>
                         </ToolBar>
                     </AppBar>
                 </Grid>
 
-                <Grid item >
-                    <img src={imageSource}></img>
+                <Grid item>
+                    <Route
+                        path ="/:name"
+                        exact
+                        render = {(routeProps) => <ImageHolder searchInput = {imageSource} routeInfo={routeProps} />}
+                    />
                 </Grid>
             </Grid>
         </div>
