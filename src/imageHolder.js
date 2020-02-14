@@ -20,7 +20,13 @@ const imageHolder = (props) => {
         imageURL =  "https://source.unsplash.com/800x450/?" + searchField;
     }
 
-    
+    const checkURL = () => {
+        if (searchTerm !== searchField)
+        {
+            props.updatePath = searchTerm;
+        }
+    }
+
 
     return (
         <img src={imageURL}></img>

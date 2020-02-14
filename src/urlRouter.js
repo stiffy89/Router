@@ -106,7 +106,7 @@ const URLRouter = () => {
                     <Route
                         path ="/:name"
                         exact
-                        render = {(routeProps) => <ImageHolder searchInput = {imageSource} routeInfo={routeProps} />}
+                        render = {(routeProps) => <ImageHolder searchInput = {imageSource} routeInfo={routeProps} updatePath = {pathName}/>}
                     />
                 </Grid>
             </Grid>
